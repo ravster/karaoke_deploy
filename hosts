@@ -1,0 +1,2 @@
+[all_in_one_servers]
+52.60.94.140 ansible_private_key_file=~/.ssh/alpha-karaoke.pem ansible_user=ubuntu

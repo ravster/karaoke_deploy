@@ -1,0 +1,5 @@
+---
+- hosts: all_in_one_servers
+  become: False
+  roles:
+    - deploy

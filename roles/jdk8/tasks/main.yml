@@ -1,0 +1,8 @@
+---
+- name: Add jdk8
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+    - openjdk-8-jdk-headless
+
+# This is probably the best place to download and install leiningen
+# https://leiningen.org/

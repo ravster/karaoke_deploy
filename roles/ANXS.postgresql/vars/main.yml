@@ -1,0 +1,20 @@
+# file: roles/ANXS.postgresql/vars/main.yml
+
+postgresql_version: 9.5
+postgresql_ext_install_postgis: yes
+postgresql_ext_postgis_version: "2.3"
+postgresql_databases:
+  - name: karaoke
+    owner: karaoke
+
+postgresql_users:
+  - name: karaoke
+    pass: asdfasdf
+    encrypted: no
+
+postgresql_user_privileges:
+  - name: karaoke
+    db: karaoke
+    priv: "ALL"
+    role_attr_flags: "CREATEDB"
+ansible_distribution_release: xenial

@@ -1,0 +1,8 @@
+---
+db_name: karaoke
+db_user: karaoke
+db_pass: asdfasdf
+db_host: 127.0.0.1
+db_port: 5432
+app_name: karaoke
+deploy_directory: "/home/ubuntu/{{ app_name }}"

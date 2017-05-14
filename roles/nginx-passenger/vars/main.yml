@@ -1,0 +1,7 @@
+---
+# vars file for ansible-nginx-passenger
+
+app_name: karaoke
+webserver_name: "{{ app_name }}"
+deploy_directory: "/home/ubuntu/{{ app_name }}"
+deploy_environment: alpha

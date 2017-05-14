@@ -1,0 +1,18 @@
+[Unit]
+Description=karaoke
+After=syslog.target network.target
+
+[Service]
+Environment=DATABASE_URL="jdbc:postgresql://localhost/{{ db_name }}?user={{ db_user }}&password={{ db_pass }}"
+Type=simple
+WorkingDirectory={{ deploy_directory }}
+ExecStart=/usr/bin/java -jar target/uberjar/test-lum.jar
+User=ubuntu
+Group=ubuntu
+
+# if we crash, restart
+RestartSec=1
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

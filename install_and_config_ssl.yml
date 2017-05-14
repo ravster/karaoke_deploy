@@ -1,0 +1,12 @@
+---
+- hosts: all_in_one_servers
+  become: yes
+  tasks:
+    - apt_repository:
+        state: present
+        repo: 'ppa:certbot/certbot'
+        update_cache: yes
+    - name: Install/Upgrade certbot
+      apt:
+        name: certbot
+        state: present

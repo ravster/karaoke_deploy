@@ -1,0 +1,44 @@
+---
+- name: Copy files to server
+  synchronize:
+    src: "{{ source_dir }}"
+    dest: "{{ deploy_directory }}"
+    delete: yes
+    recursive: yes
+    rsync_opts:
+      - "--exclude=.git/"
+      - "--exclude=test/"
+      - "--exclude=log/"
+      - "--exclude=profiles.clj"
+      - "--exclude=target/"
+
+- name: lein deps
+  command: /home/ubuntu/bin/lein deps chdir={{ deploy_directory }}
+
+- name: Make JAR
+  command: /home/ubuntu/bin/lein uberjar chdir={{ deploy_directory }}
+
+- name: Migrate DB
+  shell: java -jar target/uberjar/test-lum.jar migrate
+  environment:
+    DATABASE_URL: "jdbc:postgresql://localhost/{{ db_name }}?user={{ db_user }}&password={{ db_pass }}"
+  args:
+    chdir: "{{ deploy_directory }}"
+
+- name: Set systemd file
+  become: True
+  template:
+    src: karaoke.service.j2
+    dest: /etc/systemd/system/karaoke.service
+
+- name: Enable karaoke in systemd
+  become: yes
+  service:
+    name: karaoke
+    enabled: yes
+
+- name: restart app
+  become: yes
+  service:
+    name: karaoke
+    state: restarted
